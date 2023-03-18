@@ -1,0 +1,47 @@
+{% extends "base.jinja" %}
+
+{% block head %}
+    <link rel="stylesheet" href={{ url_for("static", filename="css/user_page_style.css") }}>
+    <link rel="stylesheet" href={{ url_for("static", filename='css/side_menu_style.css') }}>
+{% endblock %}
+
+
+{% block content %}
+    <div class="side-menu">
+        <ul>
+            <li><a href="/">Main page</a></li>
+            <li><a href="/messanger">Messanger</a></li>
+            <li><a href="#">Friends</a></li>
+        </ul>
+    </div>
+    <div class="user-info">
+        <img class="avatar" src={{ url_for("static", filename="img/default-avatar.jpg") }} alt="">
+        <span class="user-name">User1</span>
+    </div>
+    <div class="wall">
+        <div class="post">
+            <div class="post-info">
+                <img src={{ url_for("static", filename="img/default-avatar.jpg") }} alt="">
+                <span class="user-name">User1</span>
+            </div>
+            <div class="post-content">
+                <span>Text of the post</span>
+                <img src={{ url_for("static", filename="img/default-avatar.jpg") }} alt="">
+            </div>
+            <div class="post-interface">
+                <button>Like</button> <button>Comments</button>
+            </div>
+        </div>
+        <div class="post">
+            <div class="post-info">
+                <img src={{ url_for("static", filename="img/default-avatar.jpg") }} alt="">
+                <span class="user-name">User1</span>
+            </div>
+            <div class="post-content">
+                <span>Text of the post</span>
+            </div>
+            <div class="post-interface">
+                <button>Like</button> <button>Comments</button>
+            </div>
+        </div>
+{% endblock %}

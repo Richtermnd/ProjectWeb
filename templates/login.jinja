@@ -1,0 +1,27 @@
+{% extends "base.jinja" %}
+
+{% block head %}
+    <link rel="stylesheet" href={{ url_for('static', filename='css/login_style.css') }}>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="form">
+            <h1>Login</h1>
+            <form method="post" novalidate>
+                <div class="form-item">
+                    <input type="text" name="name" id="name" placeholder="Name">
+                </div>
+                <div class="form-item">
+                    <input type="text" name="surname" id="surname" placeholder="Surname">
+                </div>
+                <div class="form-item">
+                    <input type="email" name="email" id="email" placeholder="Email">
+                </div>
+                <div class="form-item">
+                    <input type="password" name="password" id="password" placeholder="Password">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

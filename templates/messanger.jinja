@@ -1,0 +1,149 @@
+{% extends "base.jinja" %}
+
+{% block head %}
+    <link rel="stylesheet" href={{ url_for("static", filename='css/messanger_style.css')}}>
+    <link rel="stylesheet" href={{ url_for("static", filename='css/side_menu_style.css')}}>
+{% endblock %}
+
+{% block content %}
+    <div class="side-menu">
+        <ul>
+            <li><a href="/">Main page</a></li>
+            <li><a href="/messanger">Messanger</a></li>
+            <li><a href="#">Friends</a></li>
+        </ul>
+    </div>
+    <div class="chat-box">
+        <ul class="chat-list">
+            <li>
+                <div class="chat-preview">
+                    <img src="../static/img/default-avatar.jpg" alt="">
+                    <div>
+                        <span class="chat-preview-title">Chat</span><br>
+                        <span class="chat-preview-last-message">User: Last message </span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="chat-preview">
+                    <img src="../static/img/default-avatar.jpg" alt="">
+                    <div>
+                        <span class="chat-preview-title">Chat</span><br>
+                        <span class="chat-preview-last-message">User: Last message </span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="chat-preview">
+                    <img src="../static/img/default-avatar.jpg" alt="">
+                    <div>
+                        <span class="chat-preview-title">Chat</span><br>
+                        <span class="chat-preview-last-message">User: Last message </span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="chat-preview">
+                    <img src="../static/img/default-avatar.jpg" alt="">
+                    <div>
+                        <span class="chat-preview-title">Chat</span><br>
+                        <span class="chat-preview-last-message">User: Last message </span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="chat-preview">
+                    <img src="../static/img/default-avatar.jpg" alt="">
+                    <div>
+                        <span class="chat-preview-title">Chat</span><br>
+                        <span class="chat-preview-last-message">User: Last message </span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="chat-preview">
+                    <img src="../static/img/default-avatar.jpg" alt="">
+                    <div>
+                        <span class="chat-preview-title">Chat</span><br>
+                        <span class="chat-preview-last-message">User: Last message </span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="chat-preview">
+                    <img src="../static/img/default-avatar.jpg" alt="">
+                    <div>
+                        <span class="chat-preview-title">Chat</span><br>
+                        <span class="chat-preview-last-message">User: Last message </span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="chat-preview">
+                    <img src="../static/img/default-avatar.jpg" alt="">
+                    <div>
+                        <span class="chat-preview-title">Chat</span><br>
+                        <span class="chat-preview-last-message">User: Last message </span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="chat-preview">
+                    <img src="../static/img/default-avatar.jpg" alt="">
+                    <div>
+                        <span class="chat-preview-title">Chat</span><br>
+                        <span class="chat-preview-last-message">User: Last message </span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="chat-preview">
+                    <img src="../static/img/default-avatar.jpg" alt="">
+                    <div>
+                        <span class="chat-preview-title">Chat</span><br>
+                        <span class="chat-preview-last-message">User: Last message </span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="chat">
+            <div class="dialog">
+                <div class="message"> 
+                    <div class="message-sender">
+                        <img src="../static/img/default-avatar.jpg" alt="">
+                        <span>User 1</span>
+                    </div>
+                    <ul>
+                        <li>  
+                            <div class="message-content">
+                                Message. Some text about something
+                            </div>
+                        </li>
+                        <li>
+                            <div class="message-content">
+                                Message. Some text about something
+                            </div>
+                        </li>
+                    </ul>
+                
+                </div>
+                <div class="message"> 
+                    <div class="message-sender">
+                        <img src="../static/img/default-avatar.jpg" alt="">
+                        <span>User 2</span>
+                    </div>
+                    <ul>
+                        <li>  
+                            <div class="message-content">
+                                Message. Some text about something
+                            </div>
+                        </li>
+
+                    </ul>
+                
+                </div>
+            </div>
+            <input type="text" placeholder="Enter message">
+        </div>
+    </div>
+{% endblock %}

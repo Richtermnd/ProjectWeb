@@ -1,0 +1,103 @@
+.chat-box {
+    width: 75%;
+    height: 80%;
+    position: fixed;
+    left: 20%;
+    top: 10%;
+    background-color: rgb(105, 105, 105);
+    border: 2px solid gray;
+    display: flex;
+}
+
+.chat {
+    width: 70%;
+    height: 100%;
+    background-color: rgb(89, 89, 89);
+    display: block;
+}
+
+.chat input {
+    position: relative;
+    height: 7%;
+    width: 97%;
+    left: 0%;
+    margin: 5px;
+    border-radius: 5px;
+    border-style: none;
+}
+
+.dialog {
+    position: relative;
+    width: 100%;
+    height: 89%;
+}
+
+.message {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.message ul {
+    list-style-type: none;
+    margin-left: 0px;
+    padding: 0px;
+}
+
+.message-sender {
+    display: flex;
+}
+
+.message-sender img {
+    width: 30px;
+    height: 30px;
+}
+
+.message-sender span {
+    height: 30px;
+    margin-left: 10px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.message-content {
+    margin-left: 40px;
+}
+
+.chat-list {
+    width: 30%;
+    height: 100%;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid gray;
+    overflow: auto;
+}
+
+.chat-list li {
+    width: 100%;
+    height: 70px;
+    background-color: rgb(108, 164, 106);
+    margin-left: 0px;
+    border-top: 1px solid gray;
+}
+
+.chat-preview {
+    margin: 0px;
+    display: flex;
+}
+
+
+.chat-preview img {
+    height: 60px;
+    width: 60px;
+    margin: 5px;
+    display: flex;
+}
+
+.chat-preview-title {
+    font-size: 17px;
+}
+
+.chat-preview-last-message {
+    font-size: 13px;
+}

@@ -1,0 +1,40 @@
+.content {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.form {
+    position: fixed;
+    width: 40%;
+    height: auto;
+    background-color: rgb(85, 142, 83);
+    padding: 3%;
+    border-radius: 5px;
+    margin-left: 30%;
+    margin-top: 15%;
+}
+
+.form h1 {
+    text-align: center;
+}
+
+.form-item {
+    margin: 20px 10% 20px 10%;
+}
+
+.form input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border-style: none;
+}
+
+.form button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border-style: none;
+    font-size: 17px;
+}
