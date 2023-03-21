@@ -46,6 +46,10 @@ class User(SqlAlchemyBase, UserMixin):
     @password.setter
     def password(self, value):
         self.hashed_password = generate_password_hash(value)
+    
+    @property
+    def full_name(self):
+        return f'{self.surname} {self.name}'
 
     def check_password(self, password):
         return check_password_hash(self.hashed_password, password)

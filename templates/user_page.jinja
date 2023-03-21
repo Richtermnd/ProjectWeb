@@ -16,13 +16,13 @@
     </div>
     <div class="user-info">
         <img class="avatar" src={{ url_for("static", filename="img/default-avatar.jpg") }} alt="">
-        <span class="user-name">User1</span>
+        <span class="user-name">{{ user.full_name }}</span>
     </div>
     <div class="wall">
         <div class="post">
             <div class="post-info">
                 <img src={{ url_for("static", filename="img/default-avatar.jpg") }} alt="">
-                <span class="user-name">User1</span>
+                <span class="user-name">{{ user.full_name }}</span>
             </div>
             <div class="post-content">
                 <span>Text of the post</span>
@@ -35,7 +35,7 @@
         <div class="post">
             <div class="post-info">
                 <img src={{ url_for("static", filename="img/default-avatar.jpg") }} alt="">
-                <span class="user-name">User1</span>
+                <span class="user-name">{{ user.full_name }}</span>
             </div>
             <div class="post-content">
                 <span>Text of the post</span>

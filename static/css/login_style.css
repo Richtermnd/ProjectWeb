@@ -22,6 +22,8 @@
 
 .form-item {
     margin: 20px 10% 20px 10%;
+    display: grid;
+    text-align: center;
 }
 
 .form input {
