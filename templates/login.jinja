@@ -9,18 +9,14 @@
         <div class="form">
             <h1>Login</h1>
             <form method="post" novalidate>
-                <div class="form-item">
-                    <input type="text" name="name" id="name" placeholder="Name">
-                </div>
-                <div class="form-item">
-                    <input type="text" name="surname" id="surname" placeholder="Surname">
-                </div>
-                <div class="form-item">
-                    <input type="email" name="email" id="email" placeholder="Email">
-                </div>
-                <div class="form-item">
-                    <input type="password" name="password" id="password" placeholder="Password">
-                </div>
+                {% for field in form if field != 'csrf_token' %}
+                    <div class="form-item">
+                        {{ field() }}
+                        {% for error in field.errors %}
+                            <div class="error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
             </form>
         </div>
     </div>

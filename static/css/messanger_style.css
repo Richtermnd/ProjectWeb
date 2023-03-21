@@ -40,6 +40,7 @@
 .message ul {
     list-style-type: none;
     margin-left: 0px;
+    margin-top: 5px;
     padding: 0px;
 }
 
@@ -94,6 +95,10 @@
     display: flex;
 }
 
+
+.chat-preview-info {
+    padding: 5px;
+}
 .chat-preview-title {
     font-size: 17px;
 }
