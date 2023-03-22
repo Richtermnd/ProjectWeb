@@ -1,7 +1,7 @@
 import sqlalchemy
 from sqlalchemy import orm
 from ..db_session import SqlAlchemyBase
-from .association_tables import Likes
+from .association_tables import Likes, FileToContainer
 
 
 class Post(SqlAlchemyBase):
@@ -17,7 +17,7 @@ class Post(SqlAlchemyBase):
     text = sqlalchemy.Column(sqlalchemy.String)
 
     is_file = sqlalchemy.Column(sqlalchemy.Boolean)
-    file_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('files.id'))
+    file_container_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('file_containers.id'))
 
     date_time = sqlalchemy.Column(sqlalchemy.DateTime)
 
@@ -25,8 +25,8 @@ class Post(SqlAlchemyBase):
     chat = orm.relationship('CommentsChat', back_populates='post')
 
     # many to one
-    file = orm.relationship('File')
     user = orm.relationship('User')
+    file_container = orm.relationship('FileContainer')
 
     # many to many
     likes = orm.relationship('User',

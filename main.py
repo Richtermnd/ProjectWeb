@@ -32,7 +32,7 @@ def sign_in():
     if form.validate_on_submit():
         try:
             login_user(**form.get_user())
-            return redirect(f'/user/{current_user.login if current_user.login else current_user.id}')
+            return redirect(f'/user/{current_user.login}')
         except UserNotExistException:
             error = 'User with this email does not exist'
         except WrongPasswordException:

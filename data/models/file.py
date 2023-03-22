@@ -1,5 +1,7 @@
 import sqlalchemy
 from sqlalchemy import orm
+
+from .association_tables import FileToContainer
 from ..db_session import SqlAlchemyBase
 
 
@@ -16,15 +18,25 @@ class File(SqlAlchemyBase):
     path = sqlalchemy.Column(sqlalchemy.String)
     date_time = sqlalchemy.Column(sqlalchemy.DateTime)
 
+    is_displayable = sqlalchemy.Column(sqlalchemy.Boolean)
+    is_private = sqlalchemy.Column(sqlalchemy.Boolean)
+
     # many to one
     user = orm.relationship('User')
 
-    # one to many
-    messages = orm.relationship('Message', back_populates='file')
-    posts = orm.relationship('Post', back_populates='file')
+    containers = orm.relationship('FileContainer',
+                                  secondary=FileToContainer,
+                                  back_populates='files')
 
-    def get_file(self, mode='rb'):
-        return open(self.path, mode=mode)
+    # non model attrs
+    __pointer = None
+
+    def __enter__(self, mode='rb'):
+        self.__pointer = open(self.path, mode=mode)
+        return self.__pointer
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.__pointer.close()
 
     def __repr__(self):
         return f'<File> id: {self.id} name: {self.name} path: {self.path}'

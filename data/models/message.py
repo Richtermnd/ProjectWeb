@@ -15,15 +15,21 @@ class Message(SqlAlchemyBase):
     user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'))
     chat_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('chats.id'))
     date_time = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now())
+
     is_text = sqlalchemy.Column(sqlalchemy.Boolean)
     text = sqlalchemy.Column(sqlalchemy.Boolean)
+
     is_file = sqlalchemy.Column(sqlalchemy.Boolean)
-    file_id = sqlalchemy.Column(sqlalchemy.ForeignKey('files.id'))
+    file_container_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('file_containers.id'))
 
     # many to one
     user = orm.relationship('User')
     chat = orm.relationship('Chat')
-    file = orm.relationship('File')
+    file_container = orm.relationship('FileContainer')
+
+    @property
+    def files(self):
+        return self.file_container.files
 
     def __repr__(self):
         return f'<Message> id: {self.id} sender: {self.user} chat: {self.chat}'

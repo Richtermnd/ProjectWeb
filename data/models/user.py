@@ -17,7 +17,7 @@ class User(SqlAlchemyBase, UserMixin):
                            unique=True)
     name = sqlalchemy.Column(sqlalchemy.String)
     surname = sqlalchemy.Column(sqlalchemy.String)
-    login = sqlalchemy.Column(sqlalchemy.String, unique=True)
+    user_login = sqlalchemy.Column(sqlalchemy.String, unique=True)
     email = sqlalchemy.Column(sqlalchemy.String, unique=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String)
     birthdate = sqlalchemy.Column(sqlalchemy.Date)
@@ -50,6 +50,10 @@ class User(SqlAlchemyBase, UserMixin):
     @property
     def full_name(self):
         return f'{self.surname} {self.name}'
+
+    @property
+    def login(self):
+        return self.user_login if self.user_login else self.id
 
     def check_password(self, password):
         return check_password_hash(self.hashed_password, password)
