@@ -1,20 +1,31 @@
-from flask import Flask, url_for, render_template, redirect
+# Flask imports
+from flask import Flask, url_for, render_template, redirect, request
 from flask_login import login_required, current_user, login_user, logout_user, LoginManager
 
+# db imports
 from data import db_session
 from data import models
+
+# forms imports
 import forms
 from forms.form_exeptions import *
+
+from tools import *
+
+
+# init app
 app = Flask(__name__)
 
-# S - safety
-app.config['SECRET_KEY'] = 'SECRET_KEY'
+
+# -- config --
+app.config['SECRET_KEY'] = 'SECRET_KEY'  # S - safety
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 
 @login_manager.user_loader
 def load_user(user_id):
+    """ User session """
     session = db_session.create_session()
     return session.get(models.User, user_id)
 
@@ -22,12 +33,14 @@ def load_user(user_id):
 @app.route('/logout')
 @login_required
 def logout():
+    """ Logout """
     logout_user()
     return redirect('/sign_in')
 
 
 @app.route('/sign_in', methods=['POST', 'GET'])
 def sign_in():
+    """ Sign in """
     form = forms.SignInForm()
     if form.validate_on_submit():
         try:
@@ -43,6 +56,7 @@ def sign_in():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    """ Login """
     form = forms.LoginForm()
     if form.validate_on_submit():
         form.login_user()
@@ -53,7 +67,11 @@ def login():
 @app.route('/user/<user_login>')
 @login_required
 def user_page(user_login):
-    return render_template('user_page.jinja', title='User Page', user=current_user)
+    """ Return User Page """
+    with db_session.create_session() as session:
+        session.delete
+        user = session.get(models.User, user_login)
+    return render_template('user_page.jinja', title='User Page', user=user)
 
 
 @app.route('/messanger')
@@ -65,6 +83,19 @@ def messanger():
 @app.route('/')
 def index():
     return render_template('index.jinja', title='Main Page')
+
+
+@app.route('/load_file', methods=['POST', 'GET'])
+@login_required
+def test_load_file():
+    """ 
+    It's inly for test loading files 
+    Don't forget remove this
+    """
+    if request.method == 'POST':
+        file = request.files['file']
+        create_file(file)
+    return render_template('load_file.jinja')
 
 
 def main():

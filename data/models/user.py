@@ -25,7 +25,9 @@ class User(SqlAlchemyBase, UserMixin):
     # one to many
     messages = orm.relationship('Message', back_populates='user')
     files = orm.relationship('File', back_populates='user')
-    posts = orm.relationship('Post', back_populates='user')
+    posts = orm.relationship('Post', 
+                             back_populates='user',
+                             lazy='selectin')
 
     # many to many
     chats = orm.relationship('Chat',
@@ -37,7 +39,8 @@ class User(SqlAlchemyBase, UserMixin):
     friends = orm.relationship('User',
                                secondary=Friends,
                                primaryjoin=id == Friends.c.user1,
-                               secondaryjoin=id == Friends.c.user2)
+                               secondaryjoin=id == Friends.c.user2,
+                               lazy='selectin')
 
     @property
     def password(self):

@@ -143,7 +143,15 @@
                 
                 </div>
             </div>
-            <input type="text" placeholder="Enter message">
+            <div class="input">
+                <input type="text" placeholder="Enter message", id="message">
+                <label for="file" class="upload-file" type="button">
+                    <input type="file" id="file" style="display: none;"><i class="bi bi-paperclip"></i>
+                </label>
+                <button type="submit">
+                    <i class="bi bi-send"></i>
+                </button>
+            </div>
         </div>
     </div>
 {% endblock %}

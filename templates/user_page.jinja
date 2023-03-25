@@ -15,33 +15,11 @@
         </ul>
     </div>
     <div class="user-info">
-        <img class="avatar" src={{ url_for("static", filename="img/default-avatar.jpg") }} alt="">
+        <img class="avatar" src="{{ url_for('static', filename='img/default-avatar.jpg') }}" alt="">
         <span class="user-name">{{ user.full_name }}</span>
     </div>
-    <div class="wall">
-        <div class="post">
-            <div class="post-info">
-                <img src={{ url_for("static", filename="img/default-avatar.jpg") }} alt="">
-                <span class="user-name">{{ user.full_name }}</span>
-            </div>
-            <div class="post-content">
-                <span>Text of the post</span>
-                <img src={{ url_for("static", filename="img/default-avatar.jpg") }} alt="">
-            </div>
-            <div class="post-interface">
-                <button>Like</button> <button>Comments</button>
-            </div>
-        </div>
-        <div class="post">
-            <div class="post-info">
-                <img src={{ url_for("static", filename="img/default-avatar.jpg") }} alt="">
-                <span class="user-name">{{ user.full_name }}</span>
-            </div>
-            <div class="post-content">
-                <span>Text of the post</span>
-            </div>
-            <div class="post-interface">
-                <button>Like</button> <button>Comments</button>
-            </div>
-        </div>
+    <div class="wall"> 
+        {% for post in user.posts %}
+            {{ post.render() }}
+        {% endfor %}
 {% endblock %}

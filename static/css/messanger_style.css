@@ -16,14 +16,48 @@
     display: block;
 }
 
-.chat input {
-    position: relative;
+.input {
+    display: flex;
     height: 7%;
-    width: 97%;
+}
+
+.upload-file {
+    margin: 0px 3px 0px 3px;
+    background-color: rgb(89, 89, 89);
+    text-align: center;
+    font-size: 150%;
+    border-radius: 5px;
+    aspect-ratio: 1;
+
+}
+
+.input input[type="file"] {
+    display: none;
+}
+
+.input input[type="text"]{
+    position: relative;
+    height: 100% - 10px;
+    width: 100%;
     left: 0%;
     margin: 5px;
     border-radius: 5px;
     border-style: none;
+}
+
+.input button {
+    width: 10%;
+    margin: 0px 3px 0px 3px;
+    background-color: rgb(89, 89, 89);
+    text-align: center;
+    font-size: 150%;
+    border-radius: 5px;
+    border-style: none;
+    color: white;
+}
+
+.input *:focus {
+    outline: none;
 }
 
 .dialog {

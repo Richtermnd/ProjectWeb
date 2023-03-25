@@ -27,7 +27,7 @@
 }
 
 .post {
-    width: 100% - 40px;
+    width: 100%;
     background-color: rgb(105, 105, 105);
     height: auto;
     padding: 20px;
@@ -51,18 +51,28 @@
     font-size: 17px;
 }
 
-.post-content img {
-    width: 80%;
-    margin: 10%;
+.post-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%/3, max(64px, 100%/3)), 1fr));
+}
+
+
+.post-images img {
+    width: 95%;
+    margin: 5%;
+    position: relative;
 }
 
 .post-interface {
     border-top: solid black 1px;
     padding-top: 10px;
     margin-top: 10px;
+    font-size: 25px;
+    height: 40px;
 }
 
 .post-interface button {
     background-color: rgb(105, 105, 105);
     border: none;
+    outline: none;
 }

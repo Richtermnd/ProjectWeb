@@ -1,3 +1,4 @@
+from flask import render_template
 import sqlalchemy
 from sqlalchemy import orm
 from ..db_session import SqlAlchemyBase
@@ -11,13 +12,15 @@ class Post(SqlAlchemyBase):
                            primary_key=True,
                            autoincrement=True,
                            unique=True)
-    user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'))
+    user_id = sqlalchemy.Column(sqlalchemy.Integer, 
+                                sqlalchemy.ForeignKey('users.id'))
 
     is_text = sqlalchemy.Column(sqlalchemy.Boolean)
     text = sqlalchemy.Column(sqlalchemy.String)
 
     is_file = sqlalchemy.Column(sqlalchemy.Boolean)
-    file_container_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('file_containers.id'))
+    file_container_id = sqlalchemy.Column(sqlalchemy.Integer, 
+                                          sqlalchemy.ForeignKey('file_containers.id'))
 
     date_time = sqlalchemy.Column(sqlalchemy.DateTime)
 
@@ -25,8 +28,8 @@ class Post(SqlAlchemyBase):
     chat = orm.relationship('CommentsChat', back_populates='post')
 
     # many to one
-    user = orm.relationship('User')
-    file_container = orm.relationship('FileContainer')
+    user = orm.relationship('User', lazy='joined')
+    file_container = orm.relationship('FileContainer', lazy='joined')
 
     # many to many
     likes = orm.relationship('User',
@@ -35,3 +38,8 @@ class Post(SqlAlchemyBase):
 
     def __repr__(self):
         return f'<Post> id: {self.id} author: {self.user}'
+    
+    def render(self, **kwargs):
+        attrs = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
+        return render_template('post.jinja', post=self)
+        
