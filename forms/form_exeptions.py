@@ -12,3 +12,6 @@ class NotUniqueEmailException(FormException):
 
 class WrongPasswordException(FormException):
     pass
+
+class FormFileException(FormException):
+    pass

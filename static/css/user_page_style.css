@@ -1,7 +1,7 @@
 .user-info {
     position: relative;
     left: 25%;
-    width: 60%;
+    width: 40%;
     background-color: rgb(105, 105, 105);
     display: flex;
 }
@@ -21,7 +21,7 @@
 .wall {
     background-color: rgb(105, 105, 105);
     position: relative;
-    width: 60%;
+    width: 40%;
     left: 25%;
     margin-top: 40px;
 }
@@ -49,18 +49,19 @@
 
 .post-content {
     font-size: 17px;
+    width: auto;
 }
 
-.post-images {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%/3, max(64px, 100%/3)), 1fr));
+.post-image {
+    height: 400px;
+    width: auto;
 }
 
-
-.post-images img {
-    width: 95%;
-    margin: 5%;
-    position: relative;
+.post-image img {
+    height: 400px;
+    width: auto;
+    align-content: center;
+    margin: auto;
 }
 
 .post-interface {

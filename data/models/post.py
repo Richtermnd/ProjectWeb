@@ -1,3 +1,4 @@
+import datetime
 from flask import render_template
 import sqlalchemy
 from sqlalchemy import orm
@@ -21,8 +22,10 @@ class Post(SqlAlchemyBase):
     is_file = sqlalchemy.Column(sqlalchemy.Boolean)
     file_container_id = sqlalchemy.Column(sqlalchemy.Integer, 
                                           sqlalchemy.ForeignKey('file_containers.id'))
+    chat_id = sqlalchemy.Column(sqlalchemy.Integer, 
+                                sqlalchemy.ForeignKey('comments_chats.id'))
 
-    date_time = sqlalchemy.Column(sqlalchemy.DateTime)
+    date_time = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
 
     # one to one
     chat = orm.relationship('CommentsChat', back_populates='post')
@@ -42,4 +45,3 @@ class Post(SqlAlchemyBase):
     def render(self, **kwargs):
         attrs = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
         return render_template('post.jinja', post=self)
-        

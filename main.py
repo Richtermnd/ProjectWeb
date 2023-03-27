@@ -74,6 +74,20 @@ def user_page(user_login):
     return render_template('user_page.jinja', title='User Page', user=user)
 
 
+@app.route('/create_post', methods=['POST', 'GET'])
+def create_post():
+    form = forms.PostForm()
+    if form.validate_on_submit():
+        try:
+            form.create_post()
+        except FormFileException:
+            error = 'File Error'
+            return render_template('post_form.jinja', form=form, error=error)
+        # return redirect(f'/user/{current_user.login}')
+        return redirect(f'/create_post')
+    return render_template('post_form.jinja', form=form)
+
+
 @app.route('/messanger')
 @login_required
 def messanger():

@@ -4,8 +4,7 @@ from sqlalchemy import orm
 from ..db_session import SqlAlchemyBase
 from .association_tables import FileToContainer
 
-from flask import render_template, url_for
-
+from flask import render_template
 
 class FileContainer(SqlAlchemyBase):
     """ Contain list of files for posts, messages and another """
@@ -16,7 +15,8 @@ class FileContainer(SqlAlchemyBase):
                            unique=True)
     files = orm.relationship('File',
                              secondary=FileToContainer,
-                             lazy='joined')
+                             back_populates='containers',
+                             lazy='selectin')
     
 
     def __len__(self):
@@ -31,5 +31,5 @@ class FileContainer(SqlAlchemyBase):
     
     def render(self, **kwargs):
         attrs = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
-        return render_template('alt_file_container.jinja', container=self)
+        return render_template('file_container.jinja', container=self)
 

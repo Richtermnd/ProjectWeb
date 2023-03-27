@@ -7,6 +7,13 @@ from flask_login import current_user
 
 
 def create_file(file_data, container=None):
+    """ 
+    Create and return File obj 
+    
+    file_data: file data from flask.request.files['file]
+    container: Container obj
+    return: File obj
+    """
     with create_session() as session:
         data = {
             'user_id': current_user.id,

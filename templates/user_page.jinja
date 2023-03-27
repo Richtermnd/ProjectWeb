@@ -18,8 +18,8 @@
         <img class="avatar" src="{{ url_for('static', filename='img/default-avatar.jpg') }}" alt="">
         <span class="user-name">{{ user.full_name }}</span>
     </div>
-    <div class="wall"> 
-        {% for post in user.posts %}
+    <div class="wall">
+        {% for post in user.posts|sort(attribute='date_time', reverse=True)%}
             {{ post.render() }}
         {% endfor %}
 {% endblock %}
