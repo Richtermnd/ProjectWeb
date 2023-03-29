@@ -3,7 +3,7 @@ import datetime
 from .base_form import BaseForm
 from wtforms.fields import StringField, PasswordField, EmailField, DateField, SubmitField
 from wtforms.validators import DataRequired, EqualTo
-from .custom_validators import UniqueEmail
+from .custom_validators import UniqueValue
 
 from data.models import User
 from data import db_session
@@ -21,7 +21,7 @@ class LoginForm(BaseForm):
 
     email = EmailField('Email',
                        validators=[DataRequired('Required Field'),
-                                   UniqueEmail()],
+                                   UniqueValue(User.email)],
                        render_kw={'placeholder': 'Email'})
 
     birthdate = DateField('Birthdate',

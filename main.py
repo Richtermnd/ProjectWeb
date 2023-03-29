@@ -23,6 +23,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+# user session stuff
+
 @login_manager.user_loader
 def load_user(user_id):
     """ User session """
@@ -64,17 +66,29 @@ def login():
     return render_template('login.jinja', title='Login', form=form)
 
 
+# user props
+
 @app.route('/user/<user_login>')
 @login_required
 def user_page(user_login):
     """ Return User Page """
     with db_session.create_session() as session:
-        session.delete
         user = session.get(models.User, user_login)
     return render_template('user_page.jinja', title='User Page', user=user)
 
 
+@app.route('/account', methods=['POST', 'GET'])
+@login_required
+def account():
+    form = forms.UserForm(**current_user.form_data())
+    if form.validate_on_submit():
+        form.confirm_changes(current_user)
+        return redirect('/user/1')
+    return render_template('account.jinja', form=form, user=current_user)
+
+
 @app.route('/create_post', methods=['POST', 'GET'])
+@login_required
 def create_post():
     form = forms.PostForm()
     if form.validate_on_submit():
@@ -83,16 +97,19 @@ def create_post():
         except FormFileException:
             error = 'File Error'
             return render_template('post_form.jinja', form=form, error=error)
-        # return redirect(f'/user/{current_user.login}')
-        return redirect(f'/create_post')
+        return redirect(f'/user/{current_user.login}')
     return render_template('post_form.jinja', form=form)
 
+
+# messanger
 
 @app.route('/messanger')
 @login_required
 def messanger():
     return render_template('messanger.jinja', title='Messanger')
 
+
+# other
 
 @app.route('/')
 def index():
@@ -118,4 +135,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+        main()

@@ -1,3 +1,6 @@
+import requests
+import tempfile
+
 # db imports
 from data import models
 from data.db_session import create_session
@@ -10,7 +13,7 @@ def create_file(file_data, container=None):
     """ 
     Create and return File obj 
     
-    file_data: file data from flask.request.files['file]
+    file_data: file data from flask_wtf.fields.FileField
     container: Container obj
     return: File obj
     """
