@@ -5,7 +5,7 @@ import sqlalchemy
 from sqlalchemy import orm
 
 from .association_tables import FileToContainer
-from ..db_session import SqlAlchemyBase, create_session
+from ..db_session import SqlAlchemyBase
 
 from flask import url_for
 
@@ -20,7 +20,8 @@ class File(SqlAlchemyBase):
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey('users.id'))
     path = sqlalchemy.Column(sqlalchemy.String)
-    date_time = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
+    date_time = sqlalchemy.Column(sqlalchemy.DateTime, 
+                                  default=datetime.datetime.now)
 
     is_displayable = sqlalchemy.Column(sqlalchemy.Boolean)
     is_private = sqlalchemy.Column(sqlalchemy.Boolean, default=False)

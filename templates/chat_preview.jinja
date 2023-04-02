@@ -1,0 +1,11 @@
+<div class="chat-preview">
+    {{chat.avatar_render()}}
+    <a href="active_chat/{{ chat.id }}" style="text-decoration: none; color: white;">
+    <div class="chat-preview-info">
+        <span class="chat-preview-title">{{chat.name}}</span><br>
+        <span class="chat-preview-last-message">
+        {{ chat.render_last_message()}} 
+        </span>
+    </div>
+    </a>
+</div>

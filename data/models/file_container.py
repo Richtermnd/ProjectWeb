@@ -1,7 +1,7 @@
 import sqlalchemy
 from sqlalchemy import orm
 
-from ..db_session import SqlAlchemyBase
+from ..db_session import SqlAlchemyBase, create_session
 from .association_tables import FileToContainer
 
 from flask import render_template

@@ -29,9 +29,9 @@ def create_file(file_data, container=None):
         
         path = f'user_files/{file.id}_{file_data.filename}'
         file.path = path
-        with open(f'static/{path}', mode='wb') as f:
-            f.write(file_data.read())
+        file_data.save(f'static/{path}')
         if container is not None:
-            container.files.apppend(file)
+            # container.files.apppend(file)
+            container.files = container.files + [file]
         session.commit()
     return file

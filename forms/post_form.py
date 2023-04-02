@@ -22,7 +22,6 @@ class PostForm(BaseForm):
                 for file_data in self.files.data:
                     file = create_file(file_data)
                     container.files.append(file)
-                print(len(container.files))
             
             post = Post()
 

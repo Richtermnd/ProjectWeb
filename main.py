@@ -1,5 +1,5 @@
 # Flask imports
-from flask import Flask, url_for, render_template, redirect, request
+from flask import Flask, url_for, render_template, redirect, request, session
 from flask_login import login_required, current_user, login_user, logout_user, LoginManager
 
 # db imports
@@ -28,8 +28,8 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     """ User session """
-    session = db_session.create_session()
-    return session.get(models.User, user_id)
+    with db_session.create_session() as ses:
+        return ses.get(models.User, user_id)    
 
 
 @app.route('/logout')
@@ -72,8 +72,8 @@ def login():
 @login_required
 def user_page(user_login):
     """ Return User Page """
-    with db_session.create_session() as session:
-        user = session.get(models.User, user_login)
+    with db_session.create_session() as ses:
+        user = ses.get(models.User, user_login)
     return render_template('user_page.jinja', title='User Page', user=user)
 
 
@@ -103,10 +103,32 @@ def create_post():
 
 # messanger
 
-@app.route('/messanger')
+@app.route('/messanger', methods=['POST', 'GET'])
 @login_required
 def messanger():
-    return render_template('messanger.jinja', title='Messanger')
+    chat_id = session.get('chat', None)  # get active chat from cookie
+    form = forms.MessageForm()
+
+    with db_session.create_session() as ses:
+        chat = ses.get(models.Chat, chat_id)
+        
+        if form.validate_on_submit():
+            form.create_message(current_user, chat)
+            return redirect('/messanger')
+        
+        return render_template('messanger.jinja', 
+                                title='Messanger', 
+                                user=current_user, 
+                                chat=chat,
+                                form=form)
+
+
+@app.route('/active_chat/<id>')
+@login_required
+def active_chat(id):
+    """ Set active chat in cookie """
+    session['chat'] = id
+    return redirect('/messanger')
 
 
 # other
@@ -131,7 +153,7 @@ def test_load_file():
 
 def main():
     db_session.global_init('db/db.db')
-    app.run(port=8080, host='127.0.0.1', debug=True)
+    app.run(port=8080, host='localhost', debug=True)
 
 
 if __name__ == '__main__':

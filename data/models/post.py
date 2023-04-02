@@ -2,7 +2,7 @@ import datetime
 from flask import render_template
 import sqlalchemy
 from sqlalchemy import orm
-from ..db_session import SqlAlchemyBase
+from ..db_session import SqlAlchemyBase, create_session
 from .association_tables import Likes, FileToContainer
 
 
@@ -43,5 +43,6 @@ class Post(SqlAlchemyBase):
         return f'<Post> id: {self.id} author: {self.user}'
     
     def render(self, **kwargs):
-        attrs = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
-        return render_template('post.jinja', post=self)
+        with create_session() as session:
+            attrs = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
+            return render_template('post.jinja', post=self)

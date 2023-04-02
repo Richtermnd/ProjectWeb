@@ -1,10 +1,9 @@
-from flask import url_for
+from flask import render_template, url_for
 import sqlalchemy
 from sqlalchemy import orm
 from flask_login import UserMixin
 from ..db_session import SqlAlchemyBase, create_session
 from .association_tables import Friends, Likes, UserToChat, Avatars
-from .file import File
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -28,11 +27,13 @@ class User(SqlAlchemyBase, UserMixin):
     about = sqlalchemy.Column(sqlalchemy.String)
     contact_email = sqlalchemy.Column(sqlalchemy.String)
     address = sqlalchemy.Column(sqlalchemy.String)
-    avatar = orm.relationship('File', secondary=Avatars)  # default avatar
+    avatar = orm.relationship('File', secondary=Avatars, lazy='selectin')  # default avatar
 
     # one to many
-    messages = orm.relationship('Message', back_populates='user')
-    files = orm.relationship('File', back_populates='user')
+    messages = orm.relationship('Message', back_populates='user',
+                                lazy='selectin')
+    files = orm.relationship('File', back_populates='user',
+                             lazy='selectin')
     posts = orm.relationship('Post', 
                              back_populates='user',
                              lazy='selectin')
@@ -40,10 +41,12 @@ class User(SqlAlchemyBase, UserMixin):
     # many to many
     chats = orm.relationship('Chat',
                              secondary=UserToChat,
-                             back_populates='users')
+                             back_populates='users',
+                             lazy='selectin')
     likes = orm.relationship('Post',
                              secondary=Likes,
-                             back_populates='likes')
+                             back_populates='likes',
+                             lazy='selectin')
     friends = orm.relationship('User',
                                secondary=Friends,
                                primaryjoin=id == Friends.c.user1,
@@ -62,6 +65,9 @@ class User(SqlAlchemyBase, UserMixin):
         }
         return data
     
+    def render_chat_list(self):
+        return render_template('chat_list.jinja', user=self)
+    
     def get_avatar(self, **kwargs):
         attrs = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
         if self.avatar:
@@ -72,7 +78,8 @@ class User(SqlAlchemyBase, UserMixin):
     @property
     def password(self):
         return self.hashed_password
-
+    
+    
     @password.setter
     def password(self, value):
         self.hashed_password = generate_password_hash(value)
