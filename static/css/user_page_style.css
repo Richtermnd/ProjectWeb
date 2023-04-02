@@ -1,7 +1,7 @@
 .user-info {
     position: relative;
     left: 25%;
-    width: 60%;
+    width: 40%;
     background-color: rgb(105, 105, 105);
     display: flex;
 }
@@ -21,13 +21,13 @@
 .wall {
     background-color: rgb(105, 105, 105);
     position: relative;
-    width: 60%;
+    width: 40%;
     left: 25%;
     margin-top: 40px;
 }
 
 .post {
-    width: 100% - 40px;
+    width: 100%;
     background-color: rgb(105, 105, 105);
     height: auto;
     padding: 20px;
@@ -49,20 +49,31 @@
 
 .post-content {
     font-size: 17px;
+    width: auto;
 }
 
-.post-content img {
-    width: 80%;
-    margin: 10%;
+.post-image {
+    height: 400px;
+    width: auto;
+}
+
+.post-image img {
+    height: 400px;
+    width: auto;
+    align-content: center;
+    margin: auto;
 }
 
 .post-interface {
     border-top: solid black 1px;
     padding-top: 10px;
     margin-top: 10px;
+    font-size: 25px;
+    height: 40px;
 }
 
 .post-interface button {
     background-color: rgb(105, 105, 105);
     border: none;
+    outline: none;
 }

@@ -32,4 +32,11 @@ FileToContainer = sqlalchemy.Table(
     sqlalchemy.Column('file', sqlalchemy.Integer, sqlalchemy.ForeignKey('files.id'), primary_key=True)
 )
 
+Avatars = sqlalchemy.Table(
+    'avatars',
+    SqlAlchemyBase.metadata,
+    sqlalchemy.Column('user', sqlalchemy.ForeignKey('users.id'), primary_key=True),
+    sqlalchemy.Column('file', sqlalchemy.ForeignKey('files.id'), primary_key=True)
+)
+
 

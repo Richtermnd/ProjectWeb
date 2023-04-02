@@ -27,12 +27,13 @@ header a {
     display: inline-block;
 }
 
+
 .btn {
-    height: auto;
     background-color: rgb(108, 164, 106);
     color: rgb(105, 105, 105);
     border-radius: 3px;
-    margin: 8px;
+    text-decoration: none;
+    margin: 10px;
     padding: 5px;
     display: inline-block;
 }

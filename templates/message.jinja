@@ -1,0 +1,14 @@
+<div class="message"> 
+    <div class="message-sender">
+        {{ message.user.get_avatar()}}
+        <span>{{ message.user.full_name }}</span>
+    </div>
+    <div class="message-content">
+        {% if message.is_text %}
+            <span>{{message.text}}</span>
+        {% endif %}
+        {% if message.is_file %}
+            {{ message.file_container.render()}}
+        {% endif %}
+    </div>
+</div>

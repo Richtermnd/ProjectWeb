@@ -1,6 +1,6 @@
 import datetime
 
-from flask_wtf import FlaskForm
+from .base_form import BaseForm
 from wtforms.fields import BooleanField, PasswordField, EmailField, SubmitField
 from wtforms.validators import DataRequired
 from .form_exeptions import *
@@ -9,7 +9,7 @@ from data.models import User
 from data import db_session
 
 
-class SignInForm(FlaskForm):
+class SignInForm(BaseForm):
     email = EmailField(
         validators=[DataRequired('Required Field')], 
         render_kw={'placeholder': 'Email'}

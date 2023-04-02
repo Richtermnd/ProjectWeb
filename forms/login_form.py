@@ -1,15 +1,16 @@
 import datetime
 
-from flask_wtf import FlaskForm
+from .base_form import BaseForm
 from wtforms.fields import StringField, PasswordField, EmailField, DateField, SubmitField
 from wtforms.validators import DataRequired, EqualTo
-from .custom_validators import UniqueEmail
+from .custom_validators import UniqueValue
 
 from data.models import User
 from data import db_session
 
 
-class LoginForm(FlaskForm):
+class LoginForm(BaseForm):
+    _ignore_fields = BaseForm._ignore_fields + ['confirm_password']
     name = StringField('Name',
                        validators=[DataRequired('Required Field')],
                        render_kw={'placeholder': 'Name'})
@@ -20,7 +21,7 @@ class LoginForm(FlaskForm):
 
     email = EmailField('Email',
                        validators=[DataRequired('Required Field'),
-                                   UniqueEmail()],
+                                   UniqueValue(User.email)],
                        render_kw={'placeholder': 'Email'})
 
     birthdate = DateField('Birthdate',
@@ -39,14 +40,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
     def login_user(self):
-        data = self.data
-
-        # remove extraneous data
-        data.pop('confirm_password')
-        data.pop('submit')
-        data.pop('csrf_token')
-
         # creating and adding user to db
         with db_session.create_session() as session:
-            session.add(User(**data))
+            session.add(User(**self.data))
             session.commit()

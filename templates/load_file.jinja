@@ -1,0 +1,14 @@
+{% extends "base.jinja" %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+    <form class="login_form" method="post" enctype="multipart/form-data" style="margin: 20px;">
+        <div class="form-group" style="display: grid; width: 40%">
+            <label for="photo">Приложите файл</label>
+            <input type="file" class="form-control-file" id="photo" name="file">
+            <input type="submit" placeholder="Send">
+        </div>
+    </form>
+{% endblock %}

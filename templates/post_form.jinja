@@ -1,0 +1,26 @@
+{% extends "base.jinja" %}
+
+{% block head %}
+    <link rel="stylesheet" href={{ url_for('static', filename='css/login_style.css') }}>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="form">
+            <h1>Post</h1>
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% for field in form if field != 'csrf_token' %}
+                    <div class="form-item">
+                        {{ field() }}
+                        {% for error in field.errors %}
+                            <div class="error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </form>
+            {% if error %}
+            <div class="error"> {{error}} </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
