@@ -1,0 +1,23 @@
+<div class="chat">
+    <div class="dialog" id="dialog">
+    {% for message in chat.messages %}
+        {{ message.render() }}
+    {% endfor %}
+    </div> 
+    <script>
+        var objDiv = document.getElementById("dialog");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    </script>
+    <form class="input" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ form.text() }}
+        <label for="file" class="upload-file" type="button">
+            <i class="bi bi-paperclip"></i>
+            {{ form.files() }}
+        </label>
+        <button type="submit">
+            <i class="bi bi-send"></i>
+        </button>
+    </form>
+
+</div>

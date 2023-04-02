@@ -1,0 +1,7 @@
+<ul class="chat-list">
+    {% for chat in user.chats %}
+    <li>
+        {{chat.preview_render()}}
+    </li>
+    {% endfor %}
+</ul>

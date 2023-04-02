@@ -1,0 +1,23 @@
+<div id="{{ container.id }}" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+    {% for file in container.displayable_files() %}
+        {% if loop.first %}
+        <div class="post-image carousel-item active">
+            {{ file.render(class="d-block w-100") }}
+        </div>
+        {% else %}
+        <div class="post-image carousel-item">
+            {{ file.render(class="d-block w-100") }}
+        </div>
+        {% endif %}
+    {% endfor %}
+    <a class="carousel-control-prev" href="#{{ container.id }}" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#{{ container.id }}" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a> 
+    </div>
+</div>

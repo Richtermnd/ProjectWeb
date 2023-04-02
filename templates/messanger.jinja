@@ -1,0 +1,22 @@
+{% extends "base.jinja" %}
+
+{% block head %}
+    <link rel="stylesheet" href={{ url_for("static", filename='css/messanger_style.css')}}>
+    <link rel="stylesheet" href={{ url_for("static", filename='css/side_menu_style.css')}}>
+{% endblock %}
+
+{% block content %}
+    <div class="side-menu">
+        <ul>
+            <li><a href="/">Main page</a></li>
+            <li><a href="/messanger">Messanger</a></li>
+            <li><a href="#">Friends</a></li>
+        </ul>
+    </div>
+    <div class="chat-box">
+        {{ user.render_chat_list() }}
+        {% if chat %}
+            {{ chat.render(form)}}
+        {% endif %}
+    </div>
+{% endblock %}

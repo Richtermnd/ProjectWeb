@@ -1,0 +1,18 @@
+<div class="post">
+    <div class="post-info">
+        <img src="{{ url_for('static', filename='img/default-avatar.jpg') }}" alt="">
+        <span class="user-name">{{ post.user.full_name }}</span>
+    </div>
+    <div class="post-content">
+        {% if post.is_text %}
+            <span style="margin-left: 20px;">{{ post.text }}</span>
+        {% endif %}
+        {% if post.is_file %}
+            {{ post.file_container.render() }}
+        {% endif %}
+    </div>
+    <div class="post-interface">
+        <button style="float: left;"><i class="bi bi-heart"></i></button>
+        <button style="float: right;"><i class="bi bi-chat-left"></i></button>
+    </div>
+</div>

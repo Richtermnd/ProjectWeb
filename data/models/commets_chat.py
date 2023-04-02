@@ -10,12 +10,12 @@ class CommentsChat(Chat):
         "polymorphic_identity": "comments_chats"
     }
 
-    id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('chats.id'),
+    id = sqlalchemy.Column(sqlalchemy.Integer, 
+                           sqlalchemy.ForeignKey('chats.id'),
                            primary_key=True,
                            autoincrement=True,
                            unique=True)
-    post_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('posts.id'))
-    post = orm.relationship('Post', back_populates='chat')
+    post = orm.relationship('Post')
 
     def __repr__(self):
         return f'<CommentsChat> id {self.id} post: {self.post}'
