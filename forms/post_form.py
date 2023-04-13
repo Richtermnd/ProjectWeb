@@ -1,3 +1,4 @@
+import datetime
 from .base_form import BaseForm
 from wtforms.fields import SubmitField, TextAreaField, MultipleFileField
 
@@ -9,39 +10,28 @@ from tools import create_file
 
 
 class PostForm(BaseForm):
-    _ignore_fields = BaseForm._ignore_fields
+    _ignore_fields = BaseForm._ignore_fields + ['files']
     text = TextAreaField('Text of the post', render_kw={'placeholder': 'Enter text of the post'})
     files = MultipleFileField('Files')
     submit = SubmitField('Post')
 
     def create_post(self):
         with db_session.create_session() as session:
-            # Loading and adding files
-            if self.files.data:
+            data = self.data
+            data['is_text'] = bool(self.text.data)
+            true_files = list(filter(lambda x: x.filename != '', self.files.data))
+            data['is_file'] = any(true_files)
+            post = Post(**data)
+            if data['is_file']:
                 container = FileContainer()
-                for file_data in self.files.data:
-                    file = create_file(file_data)
-                    container.files.append(file)
-            
-            post = Post()
-
-            # user
-            post.user_id = current_user.id
-
-            # text
-            post.is_text = bool(self.text.data)
-            post.text = self.text.data
-
-            # files
-            post.is_file = bool(self.files.data)
-            post.file_container = container
-
-            # chat
-            chat = CommentsChat(post=[post])
-            post.chat = chat
-
+                for file_data in true_files:
+                    create_file(file_data, container)
+                post.file_container = container
+            post.user = current_user
+            comments_chat = CommentsChat()
+            post.chat = comments_chat
             session.add(post)
             session.commit()
-        return post
-
-
+            post.name= f'Comments to post {post.id}'
+            session.commit()
+            return post

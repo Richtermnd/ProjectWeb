@@ -1,0 +1,81 @@
+.content {
+    position: absolute;
+    left: 15%;
+    width: 75%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.avatar {
+    width: 20%;
+    height: auto;
+}
+
+.user-name {
+    font-size: 20px;
+    margin-left: 20px;
+    height: 40px;
+    padding-top: 10px;
+}
+
+.wall {
+    background-color: rgb(105, 105, 105);
+    position: relative;
+    width: 80%;
+    left: 10%;
+    margin-top: 40px;
+}
+
+.post {
+    width: 100%;
+    background-color: rgb(105, 105, 105);
+    height: auto;
+    padding: 20px;
+    border: solid black
+}
+
+.post-info {
+    width: 100%;
+    display: flex;
+    margin: 10px 0px 10px 10px;
+    left: 10px;
+    top: 10px;
+}
+
+.post-info img {
+    width: 80px;
+    height: auto;
+}
+
+.post-content {
+    font-size: 17px;
+    width: auto;
+}
+
+.post-image {
+    height: 400px;
+    width: auto;
+}
+
+.post-image img {
+    height: 400px;
+    width: auto;
+    align-content: center;
+    margin: auto;
+}
+
+.post-interface {
+    border-top: solid black 1px;
+    padding-top: 10px;
+    margin-top: 10px;
+    font-size: 25px;
+    height: 40px;
+}
+
+.post-interface a {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(105, 105, 105);
+    border: none;
+    outline: none;
+}

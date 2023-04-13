@@ -21,5 +21,7 @@ def NotEmpty(message='Empty message'):
             return is_text or is_file
         else:
             print(message)
+            print(form.files.data)
+            print(form.text.data)
             raise ValidationError(message)
     return _validator

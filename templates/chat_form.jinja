@@ -1,0 +1,54 @@
+{% extends "base.jinja" %}
+
+{% block content %}
+    <div class="content">
+        <div class="form">
+            <h1>Create Chat</h1>
+            <form method="post" novalidate enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="form-item">
+                    {{ form.avatar.label()}}
+                    {{ form.avatar() }}
+                    {% for error in form.avatar.errors %}
+                        <div class="error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="form-item">
+                    {{ form.name.label()}}
+                    {{ form.name() }}
+                    {% for error in form.name.errors %}
+                        <div class="error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="form-item">
+                    {{ form.is_public.label()}}
+                    {{ form.is_public() }}
+                    {% for error in form.is_public.errors %}
+                        <div class="error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="form-item">
+                    {{ form.users.label()}}
+                    {{ form.users(class="form-select") }}
+                    {% for error in form.users.errors %}
+                        <div class="error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="form-item">
+                    {{ form.submit() }}
+                
+                {# {% for field in form if field != 'csrf_token' %}
+                    <div class="form-item">
+                        {{ field() }}
+                        {% for error in field.errors %}
+                            <div class="error">{{ error }}</div>
+                        {% endfor %}
+                        </div>
+                {% endfor %}
+            </form>
+            {% if error %}
+            <div class="error"> {{error}} </div>
+            {% endif %} #}
+        </div>
+    </div>
+{% endblock %}

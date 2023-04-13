@@ -22,10 +22,6 @@ class UserForm(BaseForm):
                           validators=[DataRequired('Required Field')],
                           render_kw={'placeholder': 'Surname'})
 
-    user_login = StringField('Surname',
-                                 validators=[UniqueValue(User.user_login)],
-                                 render_kw={'placeholder': 'Personal login'})
-
     email = EmailField('Email',
                        validators=[DataRequired('Required Field')],
                        render_kw={'placeholder': 'Email'})
@@ -44,12 +40,13 @@ class UserForm(BaseForm):
     def confirm_changes(self, user: User):
         with db_session.create_session() as session:
             # avatar is hard
-            user = session.get(User, user.id)  # idk, but without this doesn't work commit
+            print(self.avatar.data)
+            user = session.get(User, user.id)
             user.name = self.name.data
             user.surname = self.surname.data
-            user.user_login = self.user_login.data
             user.email = self.email.data
             user.birthdate = self.birthdate.data
             user.about = self.about.data
             user.contact_email = self.contact_email.data
+            user.avatar.append(create_file(self.avatar.data))
             session.commit()

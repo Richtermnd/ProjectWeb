@@ -8,4 +8,15 @@
         </span>
     </div>
     </a>
+    <div class="interface">
+    <div>
+        <a href="/leave_chat/{{chat.id}}"><i class="bi bi-escape"></i></a>
+    </div>
+    {% if chat.creator == current_user %}
+    <div>
+        <a href="/delete_chat/{{chat.id}}"><i class="bi bi-trash"></i></a>
+        <a href="/chat/{{chat.id}}"><i class="bi bi-pencil-fill"></i></a>
+    </div>
+    {% endif %}
+    </div>
 </div>

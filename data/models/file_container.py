@@ -15,8 +15,8 @@ class FileContainer(SqlAlchemyBase):
                            unique=True)
     files = orm.relationship('File',
                              secondary=FileToContainer,
-                             back_populates='containers',
-                             lazy='selectin')
+                             back_populates='containers', 
+                             lazy='dynamic')
     
 
     def __len__(self):

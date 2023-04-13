@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="avatar">
+        {{ user.get_avatar(class="avatar")}}
+    </div>
+    <div class="info">
+        <div class="name">
+            <a href="/user/{{user.id}}" >{{ user.full_name }}</a><br>
+        </div>
+        <div class="about">
+            {{ user.about }}
+        </div>
+    </div>
+    <div class="interface">
+        {% if is_friend %}
+        <a class="btn" href="to_chat/{{ user.id }}">Message</a>
+        {% else %}
+        <a class="btn" href="add_friend/{{ user.id }}">Add Friend</a>
+        {% endif %}
+    </div>
+</div>

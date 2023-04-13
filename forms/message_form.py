@@ -13,7 +13,8 @@ from tools import create_file
 class MessageForm(BaseForm):
     _ignore_fields = BaseForm._ignore_fields + ['files']
     
-    text = StringField(render_kw={'placeholder': 'Enter message'})
+    text = StringField(render_kw={'placeholder': 'Enter message', 
+                                  'autocomplete': "off"})
     files = MultipleFileField()
 
     submit = SubmitField(Markup(''),

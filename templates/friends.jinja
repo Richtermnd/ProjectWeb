@@ -1,0 +1,34 @@
+{% extends "base.jinja" %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/side_menu_style.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/friends.css')}}">
+{% endblock head %}
+
+{% block content %}
+    <div class="side-menu">
+        <ul>
+            <li><a href="/">Main page</a></li>
+            <li><a href="/user/{{user.id}}">My page</a></li>
+            <li><a href="/messanger">Messanger</a></li>
+            <li><a href="/friends">Friends</a></li>
+        </ul>
+    </div>
+
+    <div class="friend-list">
+        {% if friends %}
+        <span>Friends</span>
+        {% for friend in friends %}
+            {{ friend.user2.render_card(is_friend=True) }}
+        <br>
+        {% endfor %}
+        {% endif %}
+        {% if friends | length < 10 %}
+        <span>Random Users</span>
+            {% for user in users %}
+                {{ user.render_card(is_friend=False) }}
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock content %}
