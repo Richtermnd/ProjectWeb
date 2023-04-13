@@ -9,12 +9,12 @@
         <div class="form">
             <h1>Edit User Info</h1>
             <form method="post" enctype="multipart/form-data">
-                <div class="form-item">
+                {# <div class="form-item">
                     <label for="avatar">
                         {{user.get_avatar(class='avatar')}}
                         {{ form.avatar(style='display: none;') }}
-                    </label>
-                </div>
+                    </label> 
+                </div> #}
                 {% for field in form if field != 'avatar' %}
                     <div class="form-item">
                         {{ field() }}

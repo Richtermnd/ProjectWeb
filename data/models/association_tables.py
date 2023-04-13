@@ -1,5 +1,6 @@
 import datetime
 import sqlalchemy
+from sqlalchemy import orm
 from ..db_session import SqlAlchemyBase
 
 UserToChat = sqlalchemy.Table(
@@ -14,15 +15,21 @@ Likes = sqlalchemy.Table(
     SqlAlchemyBase.metadata,
     sqlalchemy.Column('user', sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'), primary_key=True),
     sqlalchemy.Column('post', sqlalchemy.Integer, sqlalchemy.ForeignKey('posts.id'), primary_key=True),
-    sqlalchemy.Column('date_time', sqlalchemy.DateTime, default=datetime.datetime.now())
+    sqlalchemy.Column('date_time', sqlalchemy.DateTime, default=datetime.datetime.now)
 )
 
-Friends = sqlalchemy.Table(
-    'friends',
-    SqlAlchemyBase.metadata,
-    sqlalchemy.Column('user1', sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'), primary_key=True),
-    sqlalchemy.Column('user2', sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'), primary_key=True)
-)
+    
+
+class Friends(SqlAlchemyBase):
+    __tablename__ = 'friends'
+
+    user1_id = sqlalchemy.Column('user1', sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'), primary_key=True)
+    user2_id = sqlalchemy.Column('user2', sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'), primary_key=True)
+    chat = sqlalchemy.Column('chat', sqlalchemy.Integer, sqlalchemy.ForeignKey('chats.id'), primary_key=True)
+    user1 = orm.relationship('User', back_populates='friends', foreign_keys=[user1_id])
+    user2 = orm.relationship('User', back_populates='friends', foreign_keys=[user2_id])
+    dialog = orm.relationship('Chat', lazy='joined')
+
 
 
 FileToContainer = sqlalchemy.Table(

@@ -11,10 +11,15 @@
     <form class="input" method="post" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         {{ form.text() }}
-        <label for="file" class="upload-file" type="button">
+        <script>
+            function getFile() {
+                document.getElementById("upfile").click();
+            }
+        </script>
+        {# <button onclick="getFile()">
             <i class="bi bi-paperclip"></i>
-            {{ form.files() }}
-        </label>
+        </button> #}
+        {{ form.files(id='upfile') }}
         <button type="submit">
             <i class="bi bi-send"></i>
         </button>

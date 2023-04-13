@@ -1,5 +1,8 @@
+<div class="interface">
+<a href="/create_chat"><i class="bi bi-plus-circle"></i></a>
+</div>
 <ul class="chat-list">
-    {% for chat in user.chats %}
+    {% for chat in user.chats | sort_chats%}
     <li>
         {{chat.preview_render()}}
     </li>

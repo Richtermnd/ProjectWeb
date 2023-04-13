@@ -1,6 +1,6 @@
 <div class="post">
     <div class="post-info">
-        <img src="{{ url_for('static', filename='img/default-avatar.jpg') }}" alt="">
+        {{ post.user.get_avatar()}}
         <span class="user-name">{{ post.user.full_name }}</span>
     </div>
     <div class="post-content">
@@ -12,7 +12,7 @@
         {% endif %}
     </div>
     <div class="post-interface">
-        <button style="float: left;"><i class="bi bi-heart"></i></button>
-        <button style="float: right;"><i class="bi bi-chat-left"></i></button>
+        <a href="/like/{{post.id}}" style="float: left;"><i class="bi bi-heart"></i> {{post.likes|length}}</a>
+        <a href="/comments_chat/{{post.chat_id}}"  style="float: right;"><i class="bi bi-chat-left"></i></a>
     </div>
 </div>

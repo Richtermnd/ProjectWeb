@@ -1,11 +1,11 @@
-import requests
-import tempfile
+from functools import wraps
 
 # db imports
 from data import models
 from data.db_session import create_session
 
 # User session imports
+from flask import session
 from flask_login import current_user
 
 
@@ -31,7 +31,6 @@ def create_file(file_data, container=None):
         file.path = path
         file_data.save(f'static/{path}')
         if container is not None:
-            # container.files.apppend(file)
-            container.files = container.files + [file]
+            container.files.extend([file])
         session.commit()
-    return file
+        return file

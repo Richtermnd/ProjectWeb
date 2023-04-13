@@ -31,8 +31,8 @@ class Post(SqlAlchemyBase):
     chat = orm.relationship('CommentsChat', back_populates='post')
 
     # many to one
-    user = orm.relationship('User', lazy='joined')
-    file_container = orm.relationship('FileContainer', lazy='joined')
+    user = orm.relationship('User')
+    file_container = orm.relationship('FileContainer')
 
     # many to many
     likes = orm.relationship('User',

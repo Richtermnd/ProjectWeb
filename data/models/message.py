@@ -3,6 +3,7 @@ from flask import render_template
 import sqlalchemy
 from sqlalchemy import orm
 from ..db_session import SqlAlchemyBase, create_session
+from functools import total_ordering
 
 
 class Message(SqlAlchemyBase):
@@ -15,7 +16,7 @@ class Message(SqlAlchemyBase):
                            unique=True)
     user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'))
     chat_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('chats.id'))
-    date_time = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now())
+    date_time = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
 
     is_text = sqlalchemy.Column(sqlalchemy.Boolean)
     text = sqlalchemy.Column(sqlalchemy.String)
@@ -24,9 +25,9 @@ class Message(SqlAlchemyBase):
     file_container_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('file_containers.id'))
 
     # many to one
-    user = orm.relationship('User', lazy='selectin')
-    chat = orm.relationship('Chat', lazy='selectin')
-    file_container = orm.relationship('FileContainer', lazy='selectin')
+    user = orm.relationship('User')
+    chat = orm.relationship('Chat')
+    file_container = orm.relationship('FileContainer')
 
     def preview_render(self):
         # with create_session():
@@ -52,3 +53,15 @@ class Message(SqlAlchemyBase):
 
     def __repr__(self):
         return f'<Message> id: {self.id} sender: {self.user} chat: {self.chat}'
+    
+    def __lt__(self, other):
+        if other:
+            return self.date_time < other.date_time
+        else:
+            return True
+
+    def __eq__(self, other):
+        if other:
+            return self.date_time == other.date_time
+        else:
+            return False

@@ -10,16 +10,30 @@
     <div class="side-menu">
         <ul>
             <li><a href="/">Main page</a></li>
+            <li><a href="/user/{{user.id}}">My page</a></li>
             <li><a href="/messanger">Messanger</a></li>
-            <li><a href="#">Friends</a></li>
+            <li><a href="/friends">Friends</a></li>
         </ul>
     </div>
+    <div class="content">
     <div class="user-info">
-        <img class="avatar" src="{{ url_for('static', filename='img/default-avatar.jpg') }}" alt="">
+        {{ user.get_avatar(class='avatar')}}
         <span class="user-name">{{ user.full_name }}</span>
+
     </div>
+    {% if current_user == user %}
+    <div class="interface">
+    <span style="width: 100%">
+        <a href="/account"><i class="bi bi-pencil-fill"></i></a>
+        <a href="/create_post"><i class="bi bi-plus-circle"></i></a>
+    </span>
+    </div>
+    {% endif %}
+    
     <div class="wall">
-        {% for post in user.posts|sort(attribute='date_time', reverse=True)%}
+        {% for post in user.posts | sort(attribute='date_time', reverse=True)%}
             {{ post.render() }}
         {% endfor %}
+    </div>
+    </div>
 {% endblock %}

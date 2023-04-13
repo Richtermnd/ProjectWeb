@@ -1,0 +1,25 @@
+{% extends "base.jinja" %}
+
+{% block head %}
+    <link rel="stylesheet" href={{ url_for("static", filename="css/wall_style.css") }}>
+    <link rel="stylesheet" href={{ url_for("static", filename='css/side_menu_style.css') }}>
+{% endblock %}
+
+
+{% block content %}
+    <div class="side-menu">
+        <ul>
+            <li><a href="/">Main page</a></li>
+            <li><a href="/user/{{user.id}}">My page</a></li>
+            <li><a href="/messanger">Messanger</a></li>
+            <li><a href="/friends">Friends</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="wall">
+            {% for post in user.recomendations() %}
+                {{ post.render() }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
