@@ -1,7 +1,7 @@
 # Flask imports
 import random
 from flask import Flask, url_for, render_template, redirect, request, session
-from flask_login import login_required, current_user, login_user, logout_user, LoginManager
+from flask_login import login_required, current_user, login_user, logout_user, LoginManager, AnonymousUserMixin
 
 # db imports
 from data import db_session
@@ -203,12 +203,13 @@ def comments_chat(chat_id):
 @login_required
 def friends():
     with db_session.create_session() as ses:
-        friends = ses.get(models.User, current_user.id).friends
+        user = ses.get(models.User, current_user.id)
+        friends = user.friends
         # It's five random non friend users, just trust me.
         users = ses.query(models.User).filter(models.User.id.notin_([x.user2_id for x in friends]), 
                                               models.User.id != current_user.id).all()
         users = random.sample(users, k=min(len(users), 5))
-        return render_template('friends.jinja', title='Friends', friends=friends, users=users)
+        return render_template('friends.jinja', title='Friends', user=user, friends=friends, users=users)
 
 
 @app.route('/add_friend/<id>')
@@ -251,6 +252,8 @@ def to_chat(user_id):
 
 @app.route('/')
 def index():
+    if isinstance(current_user, AnonymousUserMixin):
+        return redirect('/login')
     session['last_page'] = '/'
     with db_session.create_session() as ses:
         user = ses.get(models.User, current_user.id)

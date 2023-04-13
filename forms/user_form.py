@@ -38,6 +38,7 @@ class UserForm(BaseForm):
     submit = SubmitField('Confirm')
 
     def confirm_changes(self, user: User):
+        file = create_file(self.avatar.data)
         with db_session.create_session() as session:
             # avatar is hard
             print(self.avatar.data)
@@ -48,5 +49,5 @@ class UserForm(BaseForm):
             user.birthdate = self.birthdate.data
             user.about = self.about.data
             user.contact_email = self.contact_email.data
-            user.avatar.append(create_file(self.avatar.data))
+            user.avatar.append(file)
             session.commit()
