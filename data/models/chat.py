@@ -1,11 +1,13 @@
 from flask import render_template, url_for
 import sqlalchemy
 from sqlalchemy import orm
+from sqlalchemy_serializer import SerializerMixin
+
 from ..db_session import SqlAlchemyBase, create_session
 from .association_tables import UserToChat
 
 
-class Chat(SqlAlchemyBase):
+class Chat(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'chats'
     __mapper_args__ = {
         "polymorphic_identity": "chats",

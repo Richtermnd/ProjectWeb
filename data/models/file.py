@@ -6,10 +6,11 @@ from sqlalchemy import orm
 
 from .association_tables import FileToContainer
 from ..db_session import SqlAlchemyBase
+from sqlalchemy_serializer import SerializerMixin
 
 from flask import url_for
 
-class File(SqlAlchemyBase):
+class File(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'files'
 
     id = sqlalchemy.Column(sqlalchemy.Integer,

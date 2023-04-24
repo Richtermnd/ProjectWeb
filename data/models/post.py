@@ -2,11 +2,13 @@ import datetime
 from flask import render_template
 import sqlalchemy
 from sqlalchemy import orm
+from sqlalchemy_serializer import SerializerMixin
+
 from ..db_session import SqlAlchemyBase, create_session
 from .association_tables import Likes, FileToContainer
 
 
-class Post(SqlAlchemyBase):
+class Post(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'posts'
 
     id = sqlalchemy.Column(sqlalchemy.Integer,

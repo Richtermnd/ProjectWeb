@@ -10,7 +10,7 @@ from data import db_session
 
 
 class ChatForm(BaseForm):
-    _ignore_fields = BaseForm._ignore_fields + ['users']
+    _ignore_fields = BaseForm._ignore_fields + ['users', 'avatar']
 
     avatar = FileField('Avatar')
     
@@ -29,14 +29,15 @@ class ChatForm(BaseForm):
     def create_chat(self):
         with db_session.create_session() as session:
             chat = Chat(**self.data)
+            session.add(chat)
+            session.commit()
             chat.creator_id = current_user.id
             chat.users.append(session.get(User, current_user.id))
             for user_id in self.users.data:
                 chat.users.append(session.get(User, user_id))
-            session.add(chat)
+            if self.avatar.data:
+                chat.avatar = create_file(self.avatar.data)
             session.commit()
-            chat.avatar = create_file(self.avatar.data)
-            session.merge(chat)
         return chat
     
     def update(self, chat):
@@ -46,4 +47,6 @@ class ChatForm(BaseForm):
             chat.is_public = self.is_public.data
             for user_id in self.users.data:
                 chat.users.append(session.get(User, user_id))
+            if self.avatar.data:
+                chat.avatar = create_file(self.avatar.data)
             session.commit()

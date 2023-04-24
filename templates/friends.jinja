@@ -18,11 +18,10 @@
 
     <div class="friend-list">
         {% if friends %}
-        <span>Friends</span>
-        {% for friend in friends %}
-            {{ friend.user2.render_card(is_friend=True) }}
-        <br>
-        {% endfor %}
+            <span>Friends</span>
+            {% for friend in friends %}
+                {{ friend.user2.render_card(is_friend=True) }}<br>
+            {% endfor %}
         {% endif %}
         {% if friends | length < 10 %}
         <span>Random Users</span>

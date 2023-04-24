@@ -26,8 +26,8 @@ class Friends(SqlAlchemyBase):
     user1_id = sqlalchemy.Column('user1', sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'), primary_key=True)
     user2_id = sqlalchemy.Column('user2', sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'), primary_key=True)
     chat = sqlalchemy.Column('chat', sqlalchemy.Integer, sqlalchemy.ForeignKey('chats.id'), primary_key=True)
-    user1 = orm.relationship('User', back_populates='friends', foreign_keys=[user1_id])
-    user2 = orm.relationship('User', back_populates='friends', foreign_keys=[user2_id])
+    user1 = orm.relationship('User', back_populates='friends', foreign_keys=[user1_id], lazy='joined')
+    user2 = orm.relationship('User', back_populates='friends', foreign_keys=[user2_id], lazy='joined')
     dialog = orm.relationship('Chat', lazy='joined')
 
 

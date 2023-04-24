@@ -31,6 +31,8 @@ class UserForm(BaseForm):
 
     about = StringField('About',
                         render_kw={'placeholder': 'About'})
+    address = StringField('address',
+                        render_kw={'placeholder': 'Address'})
     
     contact_email = EmailField('Contact Email',
                        render_kw={'placeholder': 'Contact Email'})
@@ -38,7 +40,8 @@ class UserForm(BaseForm):
     submit = SubmitField('Confirm')
 
     def confirm_changes(self, user: User):
-        file = create_file(self.avatar.data)
+        if self.avatar.data:
+            file = create_file(self.avatar.data)
         with db_session.create_session() as session:
             # avatar is hard
             print(self.avatar.data)
@@ -48,6 +51,8 @@ class UserForm(BaseForm):
             user.email = self.email.data
             user.birthdate = self.birthdate.data
             user.about = self.about.data
+            user.address = self.address.data
             user.contact_email = self.contact_email.data
-            user.avatar.append(file)
+            if self.avatar.data:
+                user.avatar = [file]
             session.commit()

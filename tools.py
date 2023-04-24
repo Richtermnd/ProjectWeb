@@ -1,4 +1,5 @@
-from functools import wraps
+import requests
+import tempfile
 
 # db imports
 from data import models
@@ -6,7 +7,9 @@ from data.db_session import create_session
 
 # User session imports
 from flask import session
-from flask_login import current_user
+from flask_login import AnonymousUserMixin, current_user
+
+from config import YANDEX_API_KEY
 
 
 def create_file(file_data, container=None):
@@ -34,3 +37,32 @@ def create_file(file_data, container=None):
             container.files.extend([file])
         session.commit()
         return file
+
+
+
+def get_map(user: models.User):
+    def get_pos(user_: models.User):
+        url = 'http://geocode-maps.yandex.ru/1.x/'
+        params = {
+            'apikey': YANDEX_API_KEY,
+            'geocode': user_.address,
+            'format': 'json'
+        }
+        response_ = requests.get(url, params=params).json()
+        return response_['response']["GeoObjectCollection"]['featureMember'][0]['GeoObject']['Point']['pos'].split()
+    
+    url = 'https://static-maps.yandex.ru/1.x/'
+    params = {
+        'l': 'map',
+        'pt': '{},{},pm2bll'.format(*get_pos(user))
+    }
+    if isinstance(current_user, AnonymousUserMixin) or user.id == current_user.id:
+        params['spn'] = '0.1,0.1'
+    else:
+        if current_user.address:
+            params['pt'] += '~{},{},pm2dol'.format(*get_pos(current_user))
+        else:
+            params['spn'] = '0.1,0.1'
+    response = requests.get(url, params=params)
+    print(response.url)
+    return response.content
