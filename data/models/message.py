@@ -3,10 +3,10 @@ from flask import render_template
 import sqlalchemy
 from sqlalchemy import orm
 from ..db_session import SqlAlchemyBase, create_session
-from functools import total_ordering
+from sqlalchemy_serializer import SerializerMixin
 
 
-class Message(SqlAlchemyBase):
+class Message(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'messages'
 
     # model fields

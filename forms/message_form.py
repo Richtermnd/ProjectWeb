@@ -31,7 +31,7 @@ class MessageForm(BaseForm):
             container = FileContainer()
             for file_data in true_files:
                 create_file(file_data, container)
-            if len(container.files) > 0:
+            if container.files:
                 message.file_container = container
         message.chat_id = chat.id
         message.user = user

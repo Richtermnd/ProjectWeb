@@ -1,7 +1,10 @@
-# Flask imports
 import random
-from flask import Flask, url_for, render_template, redirect, request, session
+import io
+
+# Flask imports
+from flask import Flask, url_for, render_template, redirect, request, session, send_file
 from flask_login import login_required, current_user, login_user, logout_user, LoginManager, AnonymousUserMixin
+from flask_restful import Api
 
 # db imports
 from data import db_session
@@ -12,17 +15,20 @@ import forms
 from forms.form_exeptions import *
 
 # other
+from config import SECRET_KEY
 from tools import *
 import filters
+import api
 
 
 # init app
 app = Flask(__name__)
+api.init(Api(app))
 filters.init(app)
 
 
 # -- config --
-app.config['SECRET_KEY'] = 'SECRET_KEY'  # S - safety
+app.config['SECRET_KEY'] = SECRET_KEY  # S - safety
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -120,7 +126,6 @@ def messanger():
         if form.validate_on_submit():
             form.create_message(current_user, chat)
             return redirect('/messanger')
-        # print(current_user.chats)
         return render_template('messanger.jinja', 
                                 title='Messanger', 
                                 user=user, 
@@ -206,8 +211,9 @@ def friends():
         user = ses.get(models.User, current_user.id)
         friends = user.friends
         # It's five random non friend users, just trust me.
-        users = ses.query(models.User).filter(models.User.id.notin_([x.user2_id for x in friends]), 
-                                              models.User.id != current_user.id).all()
+        users = ses.query(models.User).filter(
+            models.User.id.notin_([x.user2_id for x in friends]), 
+            models.User.id != current_user.id).all()
         users = random.sample(users, k=min(len(users), 5))
         return render_template('friends.jinja', title='Friends', user=user, friends=friends, users=users)
 

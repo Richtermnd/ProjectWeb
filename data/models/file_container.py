@@ -1,12 +1,13 @@
 import sqlalchemy
 from sqlalchemy import orm
+from sqlalchemy_serializer import SerializerMixin
 
 from ..db_session import SqlAlchemyBase, create_session
 from .association_tables import FileToContainer
 
 from flask import render_template
 
-class FileContainer(SqlAlchemyBase):
+class FileContainer(SqlAlchemyBase, SerializerMixin):
     """ Contain list of files for posts, messages and another """
     __tablename__ = 'file_containers'
     id = sqlalchemy.Column(sqlalchemy.Integer,

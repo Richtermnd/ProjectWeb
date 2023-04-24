@@ -1,14 +1,19 @@
 from flask import render_template, url_for
+import requests
 import sqlalchemy
 from sqlalchemy import orm
-from flask_login import UserMixin
+from flask_login import AnonymousUserMixin, UserMixin, current_user
+from sqlalchemy_serializer import SerializerMixin
+
+from config import YANDEX_API_KEY
+
 from ..db_session import SqlAlchemyBase, create_session
 from .association_tables import Friends, Likes, UserToChat, Avatars
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class User(SqlAlchemyBase, UserMixin):
+class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     __tablename__ = 'users'
 
     # model fields
@@ -46,7 +51,7 @@ class User(SqlAlchemyBase, UserMixin):
     friends = orm.relationship('Friends',
                                back_populates='user1',
                                primaryjoin=id == Friends.user1_id,
-                               join_depth=5)
+                               lazy='joined')
     
     def form_data(self):
         data = {
@@ -60,7 +65,9 @@ class User(SqlAlchemyBase, UserMixin):
         return data
     
     def friends_choices(self):
-        return [(user.user2_id, user.user2.full_name) for user in self.friends]
+        with create_session() as session:
+            s = session.get(User, self.id)
+            return [(user.user2_id, user.user2.full_name) for user in s.friends]
     
     def not_in_chat_friends(self, chat):
         return list(filter(lambda x: x not in chat.users, self.friends))
@@ -70,6 +77,36 @@ class User(SqlAlchemyBase, UserMixin):
     
     def render_card(self, is_friend=False):
         return render_template('user_card.jinja', user=self, is_friend=is_friend)
+    
+    def get_map(self, **kwargs):
+        if not self.address:
+            return ''
+        
+        attrs = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
+        def get_pos(user_):
+            url = 'http://geocode-maps.yandex.ru/1.x/'
+            params = {
+                'apikey': YANDEX_API_KEY,
+                'geocode': user_.address,
+                'format': 'json'
+            }
+            response_ = requests.get(url, params=params).json()
+            return response_['response']["GeoObjectCollection"]['featureMember'][0]['GeoObject']['Point']['pos'].split()
+        
+        url = 'https://static-maps.yandex.ru/1.x/?'
+        params = {
+            'l': 'map',
+            'pt': '{},{},pm2bll'.format(*get_pos(self))
+        }
+        if isinstance(current_user, AnonymousUserMixin) or self.id == current_user.id:
+            params['spn'] = '0.1,0.1'
+        else:
+            if current_user.address:
+                params['pt'] += '~{},{},pm2dol'.format(*get_pos(current_user))
+            else:
+                params['spn'] = '0.1,0.1'
+        params = '&'.join([f'{key}={value}' for key, value in params.items()])
+        return f'<img src="{url + params}" {attrs}>'
     
     def get_avatar(self, **kwargs):
         attrs = ' '.join([f'{key}="{value}"' for key, value in kwargs.items()])
@@ -82,7 +119,7 @@ class User(SqlAlchemyBase, UserMixin):
         all_posts = []
         for friend in self.friends:
             all_posts.extend(friend.user2.posts)
-        return sorted(all_posts, key=lambda x: x.date_time)
+        return sorted(all_posts, key=lambda x: x.date_time, reverse=True)
   
     @property
     def password(self):

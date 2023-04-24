@@ -37,3 +37,20 @@ header a {
     padding: 5px;
     display: inline-block;
 }
+
+.file {
+    margin: 0px 20px;
+    background-color: rgb(108, 164, 106);
+}
+
+.file i {
+    margin: 5px;
+    font-size: 40px;
+    background-color: rgb(108, 164, 106);
+    border-radius: 5px;
+}
+
+.file span {
+    font-size: 20px;
+    vertical-align: top;
+}
