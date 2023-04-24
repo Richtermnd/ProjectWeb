@@ -23,3 +23,5 @@ $VIRTUALENV/bin/pip install -r requirements.txt
 
 # Run your glorious application
 $VIRTUALENV/bin/python3 main.py
+mkdir db
+mkdir static/user_files
