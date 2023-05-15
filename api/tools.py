@@ -8,7 +8,7 @@ def not_found_factory(model: db_session.SqlAlchemyBase):
         with db_session.create_session() as session:
             obj = session.get(model, _id)
             if not obj:
-                abort(404, message=f"{model.__class__.___name__} {_id} not found")
+                abort(404, message=f"Object with {_id} not found")
     return func
 
 

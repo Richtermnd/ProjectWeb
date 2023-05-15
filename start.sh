@@ -21,7 +21,14 @@ fi
 # Install the requirements
 $VIRTUALENV/bin/pip install -r requirements.txt
 
+# create folders, cause github don't save empty dirs
+if [!-d "db" ] then
+  mkdir db
+fi
+
+if [!-d "static/user_files"] then 
+  mkdir static/user_files
+fi
+
 # Run your glorious application
 $VIRTUALENV/bin/python3 main.py
-mkdir db
-mkdir static/user_files

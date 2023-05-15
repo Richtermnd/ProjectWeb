@@ -1,5 +1,4 @@
 import random
-import io
 
 # Flask imports
 from flask import Flask, url_for, render_template, redirect, request, session, send_file

@@ -7,10 +7,11 @@ import sqlalchemy.ext.declarative as dec
 SqlAlchemyBase = dec.declarative_base()
 
 __factory = None
+__engine = None
 
 
 def global_init(db_file):
-    global __factory
+    global __factory, __engine
 
     if __factory:
         return
@@ -21,12 +22,16 @@ def global_init(db_file):
     conn_str = f'sqlite:///{db_file.strip()}?check_same_thread=False'
     print(f"Подключение к базе данных по адресу {conn_str}")
 
-    engine = sa.create_engine(conn_str, echo=False)
-    __factory = orm.sessionmaker(bind=engine, expire_on_commit=False)
+    __engine = sa.create_engine(conn_str, echo=False)
+    __factory = orm.sessionmaker(bind=__engine, expire_on_commit=False)
 
     from . import models  # noqa
 
-    SqlAlchemyBase.metadata.create_all(engine)
+    SqlAlchemyBase.metadata.create_all(__engine)
+
+
+def get_url():
+    return __engine.url
 
 
 def create_session() -> Session:
